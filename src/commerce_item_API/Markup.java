@@ -37,9 +37,8 @@ public class Markup {
 	public float getMarkup_percent() {
 		return markup_percent;
 	}
-	public void setMarkup_percent(Scanner scanner_input) {
-		System.out.print("Percent markup %: ");
-		markup_percent = scanner_input.nextFloat();
+	public void setMarkup_percent(float markupPercentInput) {
+		markup_percent = markupPercentInput;
 	}
 	public float getMarkup_decimal() {
 		return markup_decimal;
@@ -57,14 +56,14 @@ public class Markup {
 	public String getCurrency_markup_price() {
 		return currency_markup_price;
 	}
-	public void setCurrency_markup_price() {
-		currency_markup_price = formatCurrency(markup_price); 
+	public void setCurrency_markup_price(String currencyStr) {
+		currency_markup_price = currencyStr; 
 	}
 	public String getCurrency_current_price() {
 		return currency_current_price;
 	}
-	public void setCurrency_current_price() {
-		currency_current_price = formatCurrency(markup_item.getPrice()); 
+	public void setCurrency_current_price(String currencyStr) {
+		currency_current_price = currencyStr; 
 	}
 	// Constructors
 	public Markup(Item item_new, Scanner scanner_input) {
@@ -72,20 +71,17 @@ public class Markup {
 		// Prompt user for item number, description, and current price
 		this.markup_item.prompt_values(scanner_input);
 		// Prompt user for markup percent
-		this.setMarkup_percent(scanner_input);
+		System.out.print("Percent markup %: ");
+		Float markupPercentInput = scanner_input.nextFloat();
+		this.setMarkup_percent(markupPercentInput);
 		// Calculate new price
 		this.setMarkup_decimal();
 		this.setMarkup_price(this.markup_item.getPrice());
-		this.setCurrency_markup_price();
-		this.setCurrency_current_price();
+		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
+		this.setCurrency_markup_price(currencyFormatter.format(markup_price));
+		this.setCurrency_current_price(currencyFormatter.format(markup_item.getPrice()));
 	}
 	// Public methods
-	private static String formatCurrency(float amount) {
-        // Create a NumberFormat instance for US locale
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
-        // Format the float as currency
-        return currencyFormatter.format(amount);
-    }
 	public void final_toString() {
 		/* 
 		 * Item number
