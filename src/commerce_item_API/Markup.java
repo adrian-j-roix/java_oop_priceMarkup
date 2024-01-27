@@ -66,10 +66,17 @@ public class Markup {
 		currency_current_price = currencyStr; 
 	}
 	// Constructors
-	public Markup(Item item_new, Scanner scanner_input) {
+	public Markup(Item item_new) {
 		this.markup_item = item_new;
+	}
+	public Markup() {
+		this.markup_item = new Item();
+	}
+	// Public methods
+	public void terminalVersion() {
+		Scanner scanner_input = new Scanner(System.in);
 		// Prompt user for item number, description, and current price
-		this.markup_item.prompt_values(scanner_input);
+		this.markup_item.terminal_promptValues(scanner_input);
 		// Prompt user for markup percent
 		System.out.print("Percent markup %: ");
 		Float markupPercentInput = scanner_input.nextFloat();
@@ -80,8 +87,9 @@ public class Markup {
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
 		this.setCurrency_markup_price(currencyFormatter.format(markup_price));
 		this.setCurrency_current_price(currencyFormatter.format(markup_item.getPrice()));
+		scanner_input.close();
 	}
-	// Public methods
+	
 	public void final_toString() {
 		/* 
 		 * Item number
@@ -97,11 +105,9 @@ public class Markup {
 	// Main
 	public static void main(String[] args) {
 		System.out.println("Price Markup App\n");
-		Scanner scanner_input = new Scanner(System.in);
-		Item item_new = new Item();
-		Markup markup = new Markup(item_new, scanner_input);
+		Markup markup = new Markup();
+		markup.terminalVersion();
 		System.out.println();
 		markup.final_toString();
-		scanner_input.close();
 	}
 }

@@ -44,7 +44,7 @@ public class Item {
 		this.price= 0;
 	}
 	// Public methods
-	public void prompt_values(Scanner scanner_input) {
+	public void terminal_promptValues(Scanner scanner_input) {
 		System.out.print("Item number: ");
 		id = scanner_input.nextLine(); 
 		System.out.printf("Item %s description: ", id);
